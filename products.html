@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue_week2</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="row">
+                <!-- 產品列表 -->
+                <div class="col-md">
+                    <h1>產品列表</h1>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">產品</th>
+                                <th scope="col" width="70">原價</th>
+                                <th scope="col" width="70">售價</th>
+                                <th scope="col" width="70">狀態</th>
+                                <th scope="col" width="70"> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(itemProduct) in products" :key="itemProduct.id">
+                                <td>{{ itemProduct.title }}</td>
+                                <td>{{ itemProduct.origin_price }}</td>
+                                <td>{{ itemProduct.price }}</td>
+                                <td>
+                                    <span :class="{'text-success' : itemProduct.is_enabled  ,'text-danger' : !itemProduct.is_enabled }"> {{ itemProduct.is_enabled ? '啟用'  :'未啟用' }}  </span>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm" @click="openProduct(itemProduct)">查看</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>目前有 <span>{{ products.length }}</span> 項產品</p>
+                </div>
+                <!-- 產品細節 -->
+                <div class="col-md">
+                    <h1>產品細節</h1>
+                    <template v-if="tempProduct.title">
+                        <div class="card">
+                            <div class="card-body">
+                                <img :src="tempProduct.imageUrl" :alt="tempProduct.description" class="image">
+                                <h5 class="card-title fw-bold mt-3 align-middle">
+                                    {{ tempProduct.title }}
+                                    <span class="badge bg-primary">{{ tempProduct.category }}</span>
+                                </h5>
+                                <p class="card-text">商品描述：<br>{{ tempProduct.description }}</p>
+                                <p class="card-text">商品內容：<br>{{ tempProduct.content }}</p>
+                                <div>
+                                    <span class="fs-6 text-black-50 text-decoration-line-through">NT${{ tempProduct.origin_price }}/{{ tempProduct.unit }}</span>
+                                </div>
+                                <div>
+                                    <span class="fs-3 text-success">NT${{ tempProduct.price }}</span>/{{ tempProduct.unit }}
+                                </div>
+                            </div>
+                        </div>
+                        <template v-for="productImages in tempProduct.imagesUrl" :key="tempProduct.id">
+                            <img :src="productImages" alt="" class="images mt-3">
+                        </template>
+                    </template>
+
+                    <div v-else class="text-black-50">請選擇一個商品查看</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.9.1/axios.min.js"></script>
+    <script src="./js/products.js" type="module"></script>
+</body>
+
+</html>
