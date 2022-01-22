@@ -28,7 +28,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(itemProduct) in products" :key="itemProduct.id">
+                            <tr v-for="itemProduct in products" :key="itemProduct.id">
                                 <td>{{ itemProduct.title }}</td>
                                 <td>{{ itemProduct.origin_price }}</td>
                                 <td>{{ itemProduct.price }}</td>
@@ -64,7 +64,7 @@
                                 </div>
                             </div>
                         </div>
-                        <template v-for="productImages in tempProduct.imagesUrl" :key="tempProduct.id">
+                        <template v-for="productImages in tempProduct.imagesUrl" :key="productImages">
                             <img :src="productImages" alt="" class="images mt-3">
                         </template>
                     </template>

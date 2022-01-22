@@ -15,16 +15,32 @@ createApp({
         openProduct(itemProduct) {
             this.tempProduct = itemProduct;
         },
+        // 驗證登入
+        checkLogin() {
+            const url = `${this.apiUrl}/api/user/check`;
+            const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+            axios.defaults.headers.common['Authorization'] = token;
+
+            axios.post(url)
+                .then(res => {
+                    this.getData()
+                })
+                .catch(err => {
+                    alert(err.data.message)
+                    window.location = 'index.html'
+                })
+        },
+        // 獲取資料
         getData() {
-            const url = `${this.apiUrl}/api/${this.apiPath}/products/all`;
+            const url = `${this.apiUrl}/api/${this.apiPath}/admin/products`;
+            
             axios.get(url)
-            .then((res) => {
-                this.products = res.data.products;
-                console.log(res.data.products)
-            })
+                .then(res => {
+                    this.products = res.data.products;
+                })
         }
     },
     mounted() {
-        this.getData();
+        this.checkLogin();
     },
 }).mount('#app');

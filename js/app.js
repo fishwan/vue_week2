@@ -16,7 +16,7 @@ createApp({
 
             axios.post(url, this.user)
                 // 成功
-                .then((res) => {
+                .then(res => {
                     // console.log(res)
                     const { token, expired } = res.data;
                     // console.log(token, expired)
@@ -24,7 +24,7 @@ createApp({
                     window.location = 'products.html';
                 })
                 // 失敗
-                .catch((err) => {
+                .catch(err => {
                     alert(err.data.message);
                 })
         }
